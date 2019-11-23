@@ -1,0 +1,58 @@
+
+--Подключение к виртуальной машине, 84.201.136.171(ip)
+
+ssh test@84.201.136.171
+
+--Необходимые пакеты на виртуальной машине
+sudo apt-get install python3-pip
+pip3 install pandas
+pip3 install SQLAlchemy
+pip3 install psycopg2
+pip3 install psycopg2-binary
+
+
+--Открыть какой-либо файл
+cat /path/
+Пример:
+cat /Users/peter/.ssh/id_rsa
+
+--Скопировать файл на виртуальную машину (запускаем от основного пользователя)
+
+scp адрес_до_файла _ подключение к машине
+scp /Users/peter/Desktop/my_first_pipeline.py test@84.201.136.171:
+
+
+--Посмотреть все файлы виртуальной машины в корневом каталоге
+ls -l
+
+--Пример настройки crontab (погуглить для доп настроек)
+*/5 * * * * python -u -W ignore /home/test/cron_test.py >> /home/test/logs/cron_test.log 2&>1
+
+
+--Основная последовательность действий
+1. Скопировать файл на виртуалку
+scp /Users/peter/Desktop/my_first_pipeline.py test@84.201.136.171:
+
+2. Запустить файл
+python3 test.py
+
+
+--Сменить пользователя на postgres
+sudo su postgres
+
+--Выход
+\q
+exit
+
+--Выход из дашборда (dash)
+control+c
+
+--Запуск какого либо скрипта с параметрами 
+1.  python3 my_first_pipeline.py --start_dt=‘2019-01-01 00:00:00’ --end_dt='2005-01-01'
+2.  python3 my_first_pipeline2.py --start_dt='1985-01-01' --end_dt='2005-01-01'
+
+--Войти в postgres на локальном компе
+1. Стартуем сервер
+2. В терминале: psql -U postgres
+
+

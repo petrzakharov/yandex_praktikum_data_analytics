@@ -1,0 +1,13 @@
+
+import dash
+import dash_core_components as dcc
+import dash_html_components as html
+from dash.dependencies import Input, Output
+import plotly.graph_objs as go
+from datetime import datetime
+import pandas as pd
+from sqlalchemy import create_engine
+import sys
+import getopt
+
+#необходимо установить последние версии на момент импорта

@@ -1,0 +1,52 @@
+
+
+--Создаем бд в которую запишем агрегаты после выполнения пайплайна
+CREATE TABLE dash_engagement(record_id serial PRIMARY KEY, 
+                            dt TIMESTAMP, 
+				item_topic VARCHAR(128),
+				event VARCHAR(128),
+				age_segment VARCHAR(128),
+				unique_users BIGINT);
+
+
+--Раздаем права на чтение, запись и изменение данных в таблице
+GRANT ALL PRIVILEGES ON TABLE dash_engagement TO my_user;
+
+--Раздаем права на запись индексов
+GRANT USAGE, SELECT ON SEQUENCE dash_engagement_record_id_seq TO my_user;
+
+
+====================
+
+--Создаем бд в которую запишем агрегаты после выполнения пайплайна
+
+CREATE TABLE dash_visits(record_id serial PRIMARY KEY,
+				item_topic VARCHAR(128),
+				source_topic VARCHAR(128),
+				age_segment VARCHAR(128),
+				dt TIMESTAMP,
+				visits INT);
+
+
+--Раздаем права на чтение, запись и изменение данных в таблице
+GRANT ALL PRIVILEGES ON TABLE dash_visits TO my_user;
+
+--Раздаем права на запись индексов
+GRANT USAGE, SELECT ON SEQUENCE dash_visits_record_id_seq TO my_user;
+
+
+
+
+
+====================
+
+dash_visits
+Параметры таблицы истории событий: Тема карточки (item_topic); Тема источника (source_topic); Возрастная категория (age_segment); Дата и время; Количество событий.
+
+dash_engagement
+Параметры таблицы воронки: Тема карточки (item_topic); Возрастная категория (age_segment); Дата и время; Тип события (event); Количество уникальных пользователей.
+
+
+Одна из таблиц уменьшает размер исходных данных в 10 раз, вторая — в 50 раз. Нужно выбрать этот вариант: он уменьшает размер сильнее других. А ещё позволяет хранить разнородные данные: воронка и история событий — разные метрики.
+
+Звучит как оптимальный вариант. Во-первых, разные метрики действительно лучше разделять «пространственно» и хранить в разных таблицах. Во-вторых, вероятно, что следующая задача, которую вы получите, будет такой: «построй нам дашборд для анализа того, как соотносятся темы карточек с темами источников».
